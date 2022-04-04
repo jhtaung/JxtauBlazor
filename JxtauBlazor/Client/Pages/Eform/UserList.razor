@@ -39,18 +39,18 @@
                 <col style="width: 20%;" />
             </ColGroup>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x=>x.id)">Id</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x=>x.username)">User Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x=>x.firstName)">First Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x=>x.lastName)">Last Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x=>x.disabled)">Disabled</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x=>x.Id)">Id</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x=>x.Username)">User Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x=>x.FirstName)">First Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x=>x.LastName)">Last Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x=>x.Disabled)">Disabled</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Id">@context.id</MudTd>
-                <MudTd DataLabel="Username">@context.username</MudTd>
-                <MudTd DataLabel="First Name">@context.firstName</MudTd>
-                <MudTd DataLabel="Last Name">@context.lastName</MudTd>
-                <MudTd DataLabel="Disabled">@context.disabled</MudTd>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Username">@context.Username</MudTd>
+                <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+                <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+                <MudTd DataLabel="Disabled">@context.Disabled</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="@pageSizeOptions" />
@@ -77,18 +77,18 @@
                 <col style="width: 20%;" />
             </ColGroup>
             <HeaderContent>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x => x.id)">Id</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x => x.username)">User Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x => x.firstName)">First Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x => x.lastName)">Last Name</MudTableSortLabel></MudTh>
-                <MudTh><MudTableSortLabel SortBy="new Func<Value, object>(x => x.disabled)">Disabled</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x => x.Id)">Id</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x => x.Username)">User Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x => x.FirstName)">First Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x => x.LastName)">Last Name</MudTableSortLabel></MudTh>
+                <MudTh><MudTableSortLabel SortBy="new Func<EformUser, object>(x => x.Disabled)">Disabled</MudTableSortLabel></MudTh>
             </HeaderContent>
             <RowTemplate>
-                <MudTd DataLabel="Id">@context.id</MudTd>
-                <MudTd DataLabel="Username">@context.username</MudTd>
-                <MudTd DataLabel="First Name">@context.firstName</MudTd>
-                <MudTd DataLabel="Last Name">@context.lastName</MudTd>
-                <MudTd DataLabel="Disabled">@context.disabled</MudTd>
+                <MudTd DataLabel="Id">@context.Id</MudTd>
+                <MudTd DataLabel="Username">@context.Username</MudTd>
+                <MudTd DataLabel="First Name">@context.FirstName</MudTd>
+                <MudTd DataLabel="Last Name">@context.LastName</MudTd>
+                <MudTd DataLabel="Disabled">@context.Disabled</MudTd>
             </RowTemplate>
             <PagerContent>
                 <MudTablePager PageSizeOptions="@pageSizeOptions" />
@@ -101,9 +101,8 @@
     private bool isLoading = false;
     private int[] pageSizeOptions = new int[] { 10, 25, 50, 100 };
 
-    EformUsers eformUsers { get; set; } = new EformUsers();
-    List<Value> eformUserList = new List<Value>() { };
-    List<Value> devUserList = new List<Value>() { };
+    List<EformUser> eformUserList = new List<EformUser>() { };
+    List<EformUser> devUserList = new List<EformUser>() { };
     List<string> devUsers = new List<string>() { 
         "admin", 
         "jhtaung",
@@ -116,13 +115,13 @@
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-        var response = await client.GetFromJsonAsync<EformUsers>("api/eform/users");
-        eformUsers = response!;
+        var eformResponse = await client.GetFromJsonAsync<EformResponse>("api/eform/users");
+        var eformUsers = eformResponse!.Data;
 
-        for (int i = 0; i < eformUsers.value!.Count; i++) {
-            var eformUser = eformUsers.value[i];
-            if (devUsers.Contains(eformUser.username!)) {
-                devUserList.Add(eformUsers.value[i]);
+        for (int i = 0; i < eformUsers!.Count; i++) {
+            var eformUser = eformUsers[i];
+            if (devUsers.Contains(eformUser.Username!)) {
+                devUserList.Add(eformUsers[i]);
             } else {
                 eformUserList.Add(eformUser);
             }

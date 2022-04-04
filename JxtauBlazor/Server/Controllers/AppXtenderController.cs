@@ -6,7 +6,7 @@ namespace JxtauBlazor.Server.Controllers
     public class AppXtenderController : BaseController
     {
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<List<FileDto>> Get()
         {   
             string path = "\\\\mpifilesrv01\\Environments\\Production\\EForms\\Done";
 
@@ -31,7 +31,9 @@ namespace JxtauBlazor.Server.Controllers
                 string hour = hourminute.Length > 3 ? hourminute.Substring(0 , 2) : "0" + hourminute.Substring(0, 1);
                 string ampm = time.Split(" ")[1];
 
-                dateStr = year + "-" + month + "-" + day + " " + ampm + " " + hour + minute;
+                dateStr = year + "-" + month + "-" + day + " " + hour + ":" + minute + " " + ampm;
+                var date = DateTime.Parse(dateStr);
+                dateStr = date.ToString("yyyy-MM-dd HH:mm");
 
                 var fileDto = new FileDto() {
                     Name = file.Name,
@@ -40,7 +42,7 @@ namespace JxtauBlazor.Server.Controllers
                 dates.Add(fileDto);
             }
 
-            dates.OrderBy(x => x.Name);
+            dates = dates.OrderByDescending(x => x.DateStr).ToList();
 
             return Ok(dates);
         }

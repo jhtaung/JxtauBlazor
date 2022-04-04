@@ -17,10 +17,31 @@ namespace JxtauBlazor.Server.Controllers
         }
 
         [HttpGet("Users")]
-        public async Task<ActionResult> GetUsers()
+        public async Task<ActionResult<EformResponse>> GetUsers()
         {
-            var response = await _httpClient.GetFromJsonAsync<EformUsers>("manage/api/v1/admin/users");
-            return Ok(response);
+            var eformUsers = await _httpClient.GetFromJsonAsync<EformUsers>("manage/api/v1/admin/users");
+
+            if (eformUsers == null) {
+                return BadRequest();
+            } else if (eformUsers.value == null) {
+                return BadRequest();
+            }
+
+            var userList = new List<EformUser>() { };
+            foreach (var eformUser in eformUsers.value) {
+                userList.Add(new EformUser() { 
+                    Id = eformUser.id,
+                    Username = eformUser.username,
+                    FirstName = eformUser.firstName,
+                    LastName = eformUser.lastName,
+                    Disabled = eformUser.disabled
+                });
+            }
+
+            return Ok(new EformResponse() { 
+                Data = userList,
+                NextLink = eformUsers.NextLink
+            });
         }
     }
 }

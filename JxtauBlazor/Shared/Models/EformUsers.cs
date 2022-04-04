@@ -18,4 +18,19 @@ namespace JxtauBlazor.Shared.Models
         public string lastName { get; set; } = "";
         public bool disabled { get; set; }
     }
+
+    public class EformResponse
+    { 
+        public List<EformUser>? Data { get; set; }
+        public string? NextLink { get; set; }
+    }
+
+    public class EformUser
+    {
+        public string Id { get; set; } = "";
+        public string Username { get; set; } = "";
+        public string FirstName { get; set; } = "";
+        public string LastName { get; set; } = "";
+        public bool Disabled { get; set; }
+    }
 }
