@@ -3,11 +3,16 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.2.32317.152
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JxtauBlazor.Server", "JxtauBlazor\Server\JxtauBlazor.Server.csproj", "{674E05CA-D856-470B-91A1-7DCB76E9694D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JxtauBlazor.Server", "JxtauBlazor\Server\JxtauBlazor.Server.csproj", "{674E05CA-D856-470B-91A1-7DCB76E9694D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JxtauBlazor.Client", "JxtauBlazor\Client\JxtauBlazor.Client.csproj", "{372A90A7-E745-4FDC-A367-60B307B4355D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JxtauBlazor.Client", "JxtauBlazor\Client\JxtauBlazor.Client.csproj", "{372A90A7-E745-4FDC-A367-60B307B4355D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JxtauBlazor.Shared", "JxtauBlazor\Shared\JxtauBlazor.Shared.csproj", "{7A0E1144-C11C-470A-B0CF-53CEC072B7FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JxtauBlazor.Shared", "JxtauBlazor\Shared\JxtauBlazor.Shared.csproj", "{7A0E1144-C11C-470A-B0CF-53CEC072B7FB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8A744183-135B-4C1A-8790-207202AB685D}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

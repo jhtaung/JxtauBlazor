@@ -1,0 +1,48 @@
+﻿using JxtauBlazor.Shared.Models;
+using Microsoft.AspNetCore.Mvc;
+
+namespace JxtauBlazor.Server.Controllers
+{
+    public class AppXtenderController : BaseController
+    {
+        [HttpGet]
+        public ActionResult Get()
+        {   
+            string path = "\\\\mpifilesrv01\\Environments\\Production\\EForms\\Done";
+
+            var files = Directory.GetFiles(path)
+                .Select(f => new FileInfo(f))
+                .Where(f => f.LastAccessTime > DateTime.Now.Date.AddDays(-3))
+                .ToList();
+
+            var dates = new List<FileDto>();
+            foreach (var file in files) {
+                var fileNameArr = file.Name.Split("_");
+                var dateStr = fileNameArr[fileNameArr.Length - 1];
+                dateStr = dateStr.Split(".pdf")[0];
+
+                string year = "2022";
+                string monthday = dateStr.Split(year)[0];
+                string month = monthday.Substring(0, 1);
+                string day = monthday.Length > 2 ? monthday.Substring(1, 2) : monthday.Substring(1, 1);
+                string time = dateStr.Split(year)[1];
+                string hourminute = time.Split(" ")[0];
+                string minute = hourminute.Substring(hourminute.Length - 2, 2);
+                string hour = hourminute.Length > 3 ? hourminute.Substring(0 , 2) : "0" + hourminute.Substring(0, 1);
+                string ampm = time.Split(" ")[1];
+
+                dateStr = year + "-" + month + "-" + day + " " + ampm + " " + hour + minute;
+
+                var fileDto = new FileDto() {
+                    Name = file.Name,
+                    DateStr = dateStr
+                };
+                dates.Add(fileDto);
+            }
+
+            dates.OrderBy(x => x.Name);
+
+            return Ok(dates);
+        }
+    }
+}
