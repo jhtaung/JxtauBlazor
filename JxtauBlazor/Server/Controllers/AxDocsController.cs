@@ -12,7 +12,7 @@ namespace JxtauBlazor.Server.Controllers
 
             var files = Directory.GetFiles(path)
                 .Select(f => new FileInfo(f))
-                .Where(f => f.LastAccessTime > DateTime.Now.Date.AddDays(-3))
+                .Where(f => f.LastAccessTime > DateTime.Now.Date.AddDays(-1))
                 .ToList();
 
             var dates = new List<AxDoc>();
