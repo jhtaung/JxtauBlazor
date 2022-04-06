@@ -4,11 +4,11 @@ using Microsoft.Net.Http.Headers;
 
 namespace JxtauBlazor.Server.Controllers
 {
-    public class EformController : BaseController
+    public class EformsController : BaseController
     {
         private readonly HttpClient _httpClient;
 
-        public EformController(HttpClient httpClient) 
+        public EformsController(HttpClient httpClient)
         {
             _httpClient = httpClient;
             _httpClient.BaseAddress = new Uri("https://hondaati1.mpidom.mpi/");
@@ -21,15 +21,20 @@ namespace JxtauBlazor.Server.Controllers
         {
             var eformUsers = await _httpClient.GetFromJsonAsync<EformUsers>("manage/api/v1/admin/users");
 
-            if (eformUsers == null) {
+            if (eformUsers == null)
+            {
                 return BadRequest();
-            } else if (eformUsers.value == null) {
+            }
+            else if (eformUsers.value == null)
+            {
                 return BadRequest();
             }
 
             var userList = new List<EformUser>() { };
-            foreach (var eformUser in eformUsers.value) {
-                userList.Add(new EformUser() { 
+            foreach (var eformUser in eformUsers.value)
+            {
+                userList.Add(new EformUser()
+                {
                     Id = eformUser.id,
                     Username = eformUser.username,
                     FirstName = eformUser.firstName,
@@ -38,7 +43,8 @@ namespace JxtauBlazor.Server.Controllers
                 });
             }
 
-            return Ok(new EformResponse() { 
+            return Ok(new EformResponse()
+            {
                 Data = userList,
                 NextLink = eformUsers.NextLink
             });

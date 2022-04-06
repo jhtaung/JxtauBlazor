@@ -20,7 +20,7 @@ namespace JxtauBlazor.Shared.Models
     }
 
     public class EformResponse
-    { 
+    {
         public List<EformUser>? Data { get; set; }
         public string? NextLink { get; set; }
     }

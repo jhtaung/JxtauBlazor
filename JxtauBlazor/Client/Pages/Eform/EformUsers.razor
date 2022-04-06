@@ -29,7 +29,7 @@
             Striped="@true"
             RowsPerPage="25">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Found Dev Users</MudText>
+                <MudText Typo="Typo.h6">Devs</MudText>
             </ToolBarContent>
             <ColGroup>
                 <col style="width: 20%;" />
@@ -67,7 +67,7 @@
             Striped="@true"
             RowsPerPage="25">
             <ToolBarContent>
-                <MudText Typo="Typo.h6">Eform Users</MudText>
+                <MudText Typo="Typo.h6">Users</MudText>
             </ToolBarContent>
             <ColGroup>
                 <col style="width: 20%;" />
@@ -115,7 +115,7 @@
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-        var eformResponse = await client.GetFromJsonAsync<EformResponse>("api/eform/users");
+        var eformResponse = await client.GetFromJsonAsync<EformResponse>("api/eforms/users");
         var eformUsers = eformResponse!.Data;
 
         for (int i = 0; i < eformUsers!.Count; i++) {

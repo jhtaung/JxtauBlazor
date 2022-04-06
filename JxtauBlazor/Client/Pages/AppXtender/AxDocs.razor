@@ -1,4 +1,4 @@
-﻿@page "/ax-doc-list"
+﻿@page "/ax-docs"
 @inject HttpClient client
 @inject IJSRuntime js
 
@@ -11,7 +11,7 @@
             Loading...
         </MudText>
     } 
-    else if (fileList.Count == 0)
+    else if (axDocs.Count == 0)
     {
         <MudText Typo="Typo.body2" GutterBottom="true">
             No records found.
@@ -21,7 +21,7 @@
     {
         <MudTable 
             Class="mb-5"
-            Items="@fileList" 
+            Items="@axDocs" 
             SortLabel="Sort By" 
             Dense="@true" 
             Hover="@true" 
@@ -33,12 +33,12 @@
             </ToolBarContent>
             <HeaderContent>
                 <MudTh>
-                    <MudTableSortLabel SortBy="new Func<FileDto, object>(x=>x.DateStr)">
+                    <MudTableSortLabel SortBy="new Func<AxDoc, object>(x => x.DateStr)">
                         Date
                     </MudTableSortLabel>
                 </MudTh>
                 <MudTh>
-                    <MudTableSortLabel SortBy="new Func<FileDto, object>(x=>x.Name)">
+                    <MudTableSortLabel SortBy="new Func<AxDoc, object>(x => x.Name)">
                         Name
                     </MudTableSortLabel>
                 </MudTh>
@@ -57,14 +57,14 @@
 @code {
     private bool isLoading = false;
     private int[] pageSizeOptions = new int[] { 50, 100, 200 };
-    private List<FileDto> fileList = new List<FileDto>() { };
+    private List<AxDoc> axDocs = new List<AxDoc>() { };
 
     protected override async Task OnInitializedAsync()
     {
         isLoading = true;
-        var response = await client.GetFromJsonAsync<List<FileDto>>("api/appxtender");
-        fileList = response!;
-        // await js.InvokeVoidAsync("console.log", fileList);
+        var response = await client.GetFromJsonAsync<List<AxDoc>>("api/axdocs");
+        axDocs = response!;
+        // await js.InvokeVoidAsync("console.log", response);
         
         isLoading = false;
     }
