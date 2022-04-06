@@ -1,0 +1,110 @@
+@page "/appeals"
+@inherits JxtauBlazor.Client.Pages.AppealsComponent
+
+<MudContainer Class="mt-5" MaxWidth="MaxWidth.ExtraLarge">
+    <MudText Typo="Typo.h5" GutterBottom="true">Appeals</MudText>
+    @if (isLoading)
+    {
+        <MudText Typo="Typo.body2" GutterBottom="true">
+            Loading...
+        </MudText>
+    } 
+    else if (appealList.Count == 0)
+    {
+        <MudText Typo="Typo.body2" GutterBottom="true">
+            No records found.
+        </MudText>
+    }
+    else
+    {
+        <MudTable 
+            Class="mb-5"
+            Items="@appealList" 
+            SortLabel="Sort By" 
+            Dense="@true" 
+            Hover="@true" 
+            Bordered="@true" 
+            Striped="@true"
+            RowsPerPage="10">
+            <HeaderContent>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Id)">
+                        ID
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Rap!)">
+                        Rap
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Dept!)">
+                        Dept
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Mpid!)">
+                        Mpid
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.FirstName!)">
+                        FirstName
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.LastName!)">
+                        LastName
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Meeting!)">
+                        Meeting
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Status!)">
+                        Status
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.Notes!)">
+                        Notes
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.StatusUpdateUser!)">
+                        StatusUpdateUser
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.StatusUpdateDate!)">
+                        StatusUpdateDate
+                    </MudTableSortLabel>
+                </MudTh>
+                <MudTh>
+                    <MudTableSortLabel SortBy="new Func<AppealListDto, object>(x => x.ReceivedDate!)">
+                        ReceivedDate
+                    </MudTableSortLabel>
+                </MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="ID">@context.Id</MudTd>
+                <MudTd DataLabel="Rap">@context.Rap</MudTd>
+                <MudTd DataLabel="Dept">@context.Dept</MudTd>
+                <MudTd DataLabel="Mpid">@context.Mpid</MudTd>
+                <MudTd DataLabel="FirstName">@context.FirstName</MudTd>
+                <MudTd DataLabel="LastName">@context.LastName</MudTd>
+                <MudTd DataLabel="Meeting">@context.Meeting</MudTd>
+                <MudTd DataLabel="Status">@context.Status</MudTd>
+                <MudTd DataLabel="Notes">@context.Notes</MudTd>
+                <MudTd DataLabel="StatusUpdateUser">@context.StatusUpdateUser</MudTd>
+                <MudTd DataLabel="StatusUpdateDate">@context.StatusUpdateDate</MudTd>
+                <MudTd DataLabel="ReceivedDate">@context.ReceivedDate</MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager PageSizeOptions="@pageSizeOptions" />
+            </PagerContent>
+        </MudTable>
+    }
+</MudContainer>

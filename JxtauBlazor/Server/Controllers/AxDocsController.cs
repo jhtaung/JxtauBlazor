@@ -6,7 +6,7 @@ namespace JxtauBlazor.Server.Controllers
     public class AxDocsController : BaseController
     {
         [HttpGet]
-        public async Task<ActionResult<List<AxDoc>>> Get()
+        public async Task<ActionResult<List<AxDocDto>>> Get()
         {
             string path = "\\\\mpifilesrv01\\Environments\\Production\\EForms\\Done";
 
@@ -15,7 +15,7 @@ namespace JxtauBlazor.Server.Controllers
                 .Where(f => f.LastAccessTime > DateTime.Now.Date.AddDays(-1))
                 .ToList();
 
-            var dates = new List<AxDoc>();
+            var dates = new List<AxDocDto>();
             foreach (var file in files)
             {
                 var fileNameArr = file.Name.Split("_");
@@ -36,7 +36,7 @@ namespace JxtauBlazor.Server.Controllers
                 var date = DateTime.Parse(dateStr);
                 dateStr = date.ToString("yyyy-MM-dd HH:mm");
 
-                var fileDto = new AxDoc()
+                var fileDto = new AxDocDto()
                 {
                     Name = file.Name,
                     DateStr = dateStr
